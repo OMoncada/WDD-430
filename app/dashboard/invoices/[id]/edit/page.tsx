@@ -3,36 +3,38 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
- 
+import type { Route } from 'next'; // ✅ Importamos Route para typedRoutes
+
 export const metadata: Metadata = {
-    title: 'Invoices Edit By ID',
+  title: 'Invoices Edit By ID',
 };
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
-    const params = await props.params;
-    const id = params.id;
-    const [invoice, customers] = await Promise.all([
-        fetchInvoiceById(id),
-        fetchCustomers(),
-    ]);
+  const params = await props.params;
+  const id = params.id;
 
-    if (!invoice) {
-        notFound();
-    }
+  const [invoice, customers] = await Promise.all([
+    fetchInvoiceById(id),
+    fetchCustomers(),
+  ]);
 
-    return (
-        <main>
-        <Breadcrumbs
-            breadcrumbs={[
-            { label: 'Invoices', href: '/dashboard/invoices' },
-            {
-                label: 'Edit Invoice',
-                href: `/dashboard/invoices/${id}/edit`,
-                active: true,
-            },
-            ]}
-        />
-        <Form invoice={invoice} customers={customers} />
-        </main>
-    );
+  if (!invoice) {
+    notFound();
+  }
+
+  return (
+    <main>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Invoices', href: '/dashboard/invoices' },
+          {
+            label: 'Edit Invoice',
+            href: `/dashboard/invoices/${id}/edit` as Route, // ✅ Solución aquí
+            active: true,
+          },
+        ]}
+      />
+      <Form invoice={invoice} customers={customers} />
+    </main>
+  );
 }
