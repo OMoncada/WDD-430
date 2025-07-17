@@ -1,11 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "build": "next build",
+  "dev": "next dev --turbopack",
+  "dev:webpack": "powershell -Command \"$env:NEXT_DISABLE_TURBOPACK='1'; next dev\"",
+  "start": "next start",
+  "lint": "next lint"
+}
+,
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/forms": "^0.5.10",

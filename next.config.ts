@@ -1,17 +1,17 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     ppr: true,
-    serverActions: true,
     typedRoutes: true,
-    enableUndici: true,
-    turbo: {
-      loaders: {
-        '.ts': 'ts',
-        '.tsx': 'tsx',
-      },
+    serverActions: {}, // ✅ debe ser un objeto, no un booleano
+  },
+  turbopack: {
+    rules: {
+      '*.ts': [],
+      '*.tsx': [],
     },
   },
-  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined, // ⬅️ Esta línea es CLAVE para Vercel
+  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
 };
 
 export default nextConfig;
